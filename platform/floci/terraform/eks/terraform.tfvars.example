@@ -1,0 +1,9 @@
+aws_region         = "us-east-1"
+floci_endpoint     = "http://localhost:4566"
+cluster_name       = "northstar-dev"
+kubernetes_version = "1.31"
+
+node_group_name = "northstar-workers"
+desired_nodes   = 1
+minimum_nodes   = 1
+maximum_nodes   = 2
