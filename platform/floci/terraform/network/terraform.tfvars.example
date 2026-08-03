@@ -1,0 +1,10 @@
+aws_region      = "us-east-1"
+floci_endpoint  = "http://localhost:4566"
+project_name    = "northstar"
+environment     = "development"
+vpc_cidr        = "10.20.0.0/16"
+
+public_subnet_a_cidr = "10.20.1.0/24"
+public_subnet_b_cidr = "10.20.2.0/24"
+
+eks_cluster_name = "northstar-dev"
