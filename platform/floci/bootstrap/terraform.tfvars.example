@@ -1,0 +1,4 @@
+aws_region = "replace-with-floci-region"
+state_bucket_name = "replace-with-globally-unique-bucket-name"
+state_lock_table_name = "northstar-terraform-locks"
+enable_state_backend_creation = false

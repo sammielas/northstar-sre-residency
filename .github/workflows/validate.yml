@@ -1,0 +1,44 @@
+name: Validate Repository
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  repository-validation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform format
+        run: terraform fmt -check -recursive
+
+      - name: Validate Terraform roots
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t roots < <(find . -type f -name '*.tf' -printf '%h\n' | sort -u)
+          for root in "${roots[@]}"; do
+            echo "Validating ${root}"
+            terraform -chdir="${root}" init -backend=false
+            terraform -chdir="${root}" validate
+          done
+
+      - name: Validate shell syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' script; do
+            echo "Checking ${script}"
+            bash -n "${script}"
+          done < <(find . -type f -name '*.sh' -print0)
