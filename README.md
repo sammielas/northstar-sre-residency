@@ -1,6 +1,6 @@
 # Northstar SRE Residency
 
-A production-style Site Reliability Engineering residency built around one evolving retail platform, one Git history, and 100 reproducible production incidents.
+A production-style Site Reliability Engineering residency built around one evolving retail platform, one Git history, and reproducible production incidents.
 
 ## Overview
 
