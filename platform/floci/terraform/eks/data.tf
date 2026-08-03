@@ -1,0 +1,22 @@
+data "terraform_remote_state" "network" {
+  backend = "s3"
+
+  config = {
+    bucket = "northstar-terraform-state"
+    key    = "floci/network/terraform.tfstate"
+    region = var.aws_region
+
+    endpoints = {
+      s3       = var.floci_endpoint
+      dynamodb = var.floci_endpoint
+    }
+
+    access_key = "test"
+    secret_key = "test"
+
+    skip_credentials_validation = true
+    skip_metadata_api_check     = true
+    skip_requesting_account_id  = true
+    use_path_style              = true
+  }
+}
