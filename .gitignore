@@ -39,3 +39,4 @@ workspace/*.txt
 .idea/
 .DS_Store
 Thumbs.db
+**/secret.local.yaml
