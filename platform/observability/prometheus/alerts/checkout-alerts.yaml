@@ -1,0 +1,86 @@
+apiVersion: monitoring.coreos.com/v1
+
+kind: PrometheusRule
+
+metadata:
+  name: checkout-alerts
+  namespace: monitoring
+
+  labels:
+    release: northstar-monitoring
+
+spec:
+
+  groups:
+
+    - name: checkout_alerts
+
+      rules:
+
+      - alert: CheckoutHighP95Latency
+
+        expr: |
+          sli:checkout:p95 > 0.250
+
+        for: 1m
+
+        labels:
+          severity: warning
+          service: checkout
+          team: platform
+
+        annotations:
+          summary: "Checkout latency exceeds SLO"
+          description: "Checkout P95 latency has remained above 250ms for more than 1 minute."
+
+      - alert: CheckoutHighErrorRate
+
+        expr: |
+          sli:checkout:error_ratio > 0.01
+
+        for: 1m
+
+        labels:
+          severity: critical
+          service: checkout
+          team: platform
+
+        annotations:
+          summary: "Checkout error rate too high"
+          description: "HTTP 5xx error ratio has exceeded 1%."
+
+      - alert: CheckoutDependencyDown
+
+        expr: |
+          sli:checkout:dependency == 0
+
+        for: 30s
+
+        labels:
+          severity: critical
+          service: checkout
+          team: platform
+
+        annotations:
+          summary: "Checkout dependency unavailable"
+          description: "Redis or PostgreSQL is unavailable."
+
+      - alert: CheckoutTargetDown
+
+        expr: |
+          up{job="checkout"} == 0
+
+        for: 30s
+
+        labels:
+          severity: critical
+          service: checkout
+          team: platform
+
+        annotations:
+          summary: "Checkout target down"
+          description: "Prometheus cannot scrape the Checkout application."
+
+     
+
+        
