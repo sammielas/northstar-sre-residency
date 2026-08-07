@@ -1,0 +1,142 @@
+defaultRules:
+  create: true
+
+# K3s does not expose these components using the standard kubeadm
+# monitoring endpoints. Disable them to avoid false target-down alerts.
+kubeControllerManager:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+kubeProxy:
+  enabled: false
+
+grafana:
+  enabled: true
+
+  adminUser: admin
+
+  service:
+    type: ClusterIP
+
+  ingress:
+    enabled: false
+
+  persistence:
+    enabled: false
+
+  defaultDashboardsEnabled: true
+
+  grafana.ini:
+    database:
+      type: sqlite3
+      wal: true
+      query_retries: 10
+      transaction_retries: 10
+
+  resources:
+    requests:
+      cpu: 300m
+      memory: 256Mi
+    limits:
+      cpu: 1
+      memory: 768Mi
+
+  readinessProbe:
+    httpGet:
+      path: /api/health
+      port: 3000
+    initialDelaySeconds: 60
+    timeoutSeconds: 10
+    failureThreshold: 12
+    periodSeconds: 10
+
+  livenessProbe:
+    httpGet:
+      path: /api/health
+      port: 3000
+    initialDelaySeconds: 120
+    timeoutSeconds: 10
+    failureThreshold: 6
+    periodSeconds: 20
+
+alertmanager:
+  enabled: true
+
+  alertmanagerSpec:
+    replicas: 1
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        cpu: 150m
+        memory: 192Mi
+
+    storage: {}
+
+prometheusOperator:
+  enabled: true
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+
+prometheus:
+  enabled: true
+
+  service:
+    type: ClusterIP
+
+  ingress:
+    enabled: false
+
+  prometheusSpec:
+    replicas: 1
+
+    retention: 24h
+    retentionSize: 2GB
+
+    resources:
+      requests:
+        cpu: 250m
+        memory: 384Mi
+      limits:
+        cpu: 750m
+        memory: 1Gi
+
+    serviceMonitorSelector: {}
+    serviceMonitorNamespaceSelector: {}
+
+    podMonitorSelector: {}
+    podMonitorNamespaceSelector: {}
+
+    ruleSelector: {}
+    ruleNamespaceSelector: {}
+
+    storageSpec: {}
+
+kube-state-metrics:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 150m
+      memory: 192Mi
+
+# Disabled for the local Docker-hosted K3s environment.
+# Node exporter requires host mount propagation that is unavailable
+# in the nested K3s container.
+nodeExporter:
+  enabled: false
+
