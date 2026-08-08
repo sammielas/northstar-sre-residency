@@ -1,0 +1,30 @@
+# Sprint 0.13 post-Loki capacity
+
+Captured: 2026-08-08T10:33:44+01:00
+
+## Node usage
+NAME           CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+3a24db0382e4   589m         9%       2715Mi          34%         
+
+## Allocated resources
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource           Requests      Limits
+  --------           --------      ------
+  cpu                1585m (26%)   5650m (94%)
+  memory             2142Mi (26%)  6026Mi (75%)
+  ephemeral-storage  0 (0%)        0 (0%)
+  hugepages-1Gi      0 (0%)        0 (0%)
+  hugepages-2Mi      0 (0%)        0 (0%)
+Events:              <none>
+
+## Host memory
+               total        used        free      shared  buff/cache   available
+Mem:           7.8Gi       4.9Gi       112Mi        14Mi       2.8Gi       2.7Gi
+Swap:          4.0Gi       2.1Gi       1.9Gi
+
+## Loki Pods
+NAME                                      READY   STATUS    RESTARTS   AGE   IP           NODE           NOMINATED NODE   READINESS GATES
+northstar-alloy-57564f4b59-pj42p          2/2     Running   0          78m   10.42.1.74   3a24db0382e4   <none>           <none>
+northstar-loki-0                          2/2     Running   0          94m   10.42.1.73   3a24db0382e4   <none>           <none>
+northstar-loki-gateway-67b4cf8b54-tx54x   1/1     Running   0          94m   10.42.1.72   3a24db0382e4   <none>           <none>
