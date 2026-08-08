@@ -1,0 +1,82 @@
+# Northstar local Loki configuration
+#
+# SingleBinary is appropriate for the local single-node residency cluster.
+# Production environments would normally use persistent/object storage
+# and potentially a distributed Loki deployment.
+
+deploymentMode: SingleBinary
+
+loki:
+  auth_enabled: false
+
+  commonConfig:
+    replication_factor: 1
+
+  schemaConfig:
+    configs:
+      - from: "2024-01-01"
+        store: tsdb
+        object_store: filesystem
+        schema: v13
+        index:
+          prefix: northstar_loki_
+          period: 24h
+
+  storage:
+    type: filesystem
+
+singleBinary:
+  replicas: 1
+
+  persistence:
+    enabled: false
+
+  extraVolumes:
+    - name: loki-data
+      emptyDir: {}
+
+  extraVolumeMounts:
+    - name: loki-data
+      mountPath: /var/loki
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 768Mi
+
+# Distributed Loki components are not required in SingleBinary mode.
+
+read:
+  replicas: 0
+
+write:
+  replicas: 0
+
+backend:
+  replicas: 0
+
+gateway:
+  enabled: true
+
+  resources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
+      cpu: 100m
+      memory: 96Mi
+
+chunksCache:
+  enabled: false
+
+resultsCache:
+  enabled: false
+
+test:
+  enabled: false
+
+lokiCanary:
+  enabled: false

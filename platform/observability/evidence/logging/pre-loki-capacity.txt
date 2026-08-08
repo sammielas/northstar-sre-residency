@@ -1,0 +1,24 @@
+# Sprint 0.13 pre-Loki capacity
+
+Captured: 2026-08-07T12:19:22+01:00
+
+## Node usage
+NAME           CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+3a24db0382e4   177m         2%       2612Mi          32%         
+
+## Allocated resources
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource           Requests      Limits
+  --------           --------      ------
+  cpu                1350m (22%)   4550m (75%)
+  memory             1676Mi (21%)  4650Mi (58%)
+  ephemeral-storage  0 (0%)        0 (0%)
+  hugepages-1Gi      0 (0%)        0 (0%)
+  hugepages-2Mi      0 (0%)        0 (0%)
+Events:              <none>
+
+## Host memory
+               total        used        free      shared  buff/cache   available
+Mem:           7.8Gi       4.9Gi       104Mi        13Mi       2.7Gi       2.6Gi
+Swap:          4.0Gi       1.9Gi       2.1Gi
