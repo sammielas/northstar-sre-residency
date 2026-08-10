@@ -1,0 +1,1 @@
+floci-ecr-registry:5000/000000000000/us-east-1/northstar/checkout:0.3.0

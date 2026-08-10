@@ -1,0 +1,11 @@
+Mon Aug 10 06:30:28 BST 2026
+NAME                        READY   STATUS             RESTARTS         AGE   IP            NODE           NOMINATED NODE   READINESS GATES
+checkout-5d59b56c99-dzmf5   1/2     CrashLoopBackOff   19 (2m16s ago)   10h   10.42.1.101   3a24db0382e4   <none>           <none>
+checkout-5d59b56c99-tj22n   1/2     CrashLoopBackOff   19 (2m16s ago)   10h   10.42.1.102   3a24db0382e4   <none>           <none>
+NAME                        CPU(cores)   MEMORY(bytes)   
+checkout-5d59b56c99-dzmf5   4m           49Mi            
+checkout-5d59b56c99-tj22n   4m           48Mi            
+postgres-0                  13m          41Mi            
+redis-8466b8768b-vnlhn      6m           9Mi             
+NAME           CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+3a24db0382e4   398m         6%       2673Mi          33%         

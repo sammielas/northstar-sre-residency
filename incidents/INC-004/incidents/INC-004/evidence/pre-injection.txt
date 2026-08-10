@@ -1,0 +1,11 @@
+Sun Aug  9 20:16:35 BST 2026
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+checkout   2/2     2            2           5d9h
+NAME                       READY   STATUS    RESTARTS   AGE     IP            NODE           NOMINATED NODE   READINESS GATES
+checkout-c6dbb5c87-9fwss   1/1     Running   0          3h32m   10.42.1.100   3a24db0382e4   <none>           <none>
+checkout-c6dbb5c87-g74zp   1/1     Running   0          3h32m   10.42.1.99    3a24db0382e4   <none>           <none>
+NAME                       CPU(cores)   MEMORY(bytes)   
+checkout-c6dbb5c87-9fwss   4m           43Mi            
+checkout-c6dbb5c87-g74zp   3m           46Mi            
+NAME           CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+3a24db0382e4   212m         3%       2696Mi          33%         
