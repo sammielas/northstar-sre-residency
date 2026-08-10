@@ -855,3 +855,91 @@ MTTD / MTTR
 "How quickly did we detect and recover?"
 ```
 
+
+---
+
+## Lessons from INC-004B
+
+### Readiness vs Liveness
+
+A readiness failure means:
+
+> Stop routing traffic to this pod.
+
+A liveness failure means:
+
+> Terminate and restart this container.
+
+During INC-004B Attempt 1, severe JVM/GC pressure caused the health endpoint
+to exceed the liveness timeout.
+
+Kubernetes therefore restarted the JVM.
+
+The restart cleared process-local heap and cache state and temporarily restored
+customer latency.
+
+Do not confuse this automatic recovery with remediation of the underlying
+application defect.
+
+### Historical Kubernetes Events Matter
+
+The current pod may show:
+
+`Running / Ready`
+
+while historical Kubernetes events reveal earlier:
+
+- readiness failures
+- liveness failures
+- container restarts
+
+Always inspect Kubernetes events during JVM memory-pressure investigations.
+
+### Customer Health vs Process Health
+
+A running JVM does not necessarily mean customers are receiving an acceptable
+service.
+
+During INC-004B, P95 latency degraded significantly while the application
+continued running.
+
+Use customer-facing SLIs alongside Kubernetes health signals.
+
+### Garbage Collection Is a Signal, Not Automatically the Root Cause
+
+During INC-004B, GC activity increased because heap pressure increased.
+
+The cache continued retaining references to objects, so GC could not reclaim
+those objects.
+
+Therefore:
+
+cache retention
+→ heap pressure
+→ increased GC
+→ latency degradation
+
+GC was reacting to the problem rather than causing the original defect.
+
+### Recovery Must Be Verified
+
+A successful rollout or container restart is not sufficient evidence that an
+incident has recovered.
+
+Verify the same signals used during detection and triage:
+
+- JVM heap
+- GC behaviour
+- application-specific memory/cache metrics
+- customer latency
+- readiness
+- alert state
+
+### Incident Timing
+
+Record timestamps while the incident is happening.
+
+Do not reconstruct TTD, TTA or TTR from memory after the incident.
+
+Future incidents should record detection, acknowledgement, triage, mitigation
+and recovery timestamps as part of the runbook workflow.
