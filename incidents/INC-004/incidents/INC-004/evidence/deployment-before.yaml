@@ -1,0 +1,122 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "17"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"checkout","app.kubernetes.io/part-of":"northstar"},"name":"checkout","namespace":"northstar-dev"},"spec":{"replicas":2,"revisionHistoryLimit":5,"selector":{"matchLabels":{"app.kubernetes.io/name":"checkout"}},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"app.kubernetes.io/name":"checkout","app.kubernetes.io/part-of":"northstar","app.kubernetes.io/version":"0.3.0"}},"spec":{"containers":[{"env":[{"name":"DATABASE_URL","valueFrom":{"secretKeyRef":{"key":"DATABASE_URL","name":"checkout-secrets"}}}],"envFrom":[{"configMapRef":{"name":"checkout-config"}}],"image":"floci-ecr-registry:5000/000000000000/us-east-1/northstar/checkout:0.3.0","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/health","port":"http"},"initialDelaySeconds":10,"periodSeconds":10,"timeoutSeconds":3},"name":"checkout","ports":[{"containerPort":8080,"name":"http","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/ready","port":"http"},"periodSeconds":5,"timeoutSeconds":3},"resources":{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"100m","memory":"128Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":false,"runAsNonRoot":true},"startupProbe":{"failureThreshold":30,"httpGet":{"path":"/health","port":"http"},"periodSeconds":2,"timeoutSeconds":2}}],"terminationGracePeriodSeconds":30}}}}
+  creationTimestamp: "2026-08-04T09:44:27Z"
+  generation: 26
+  labels:
+    app.kubernetes.io/name: checkout
+    app.kubernetes.io/part-of: northstar
+  name: checkout
+  namespace: northstar-dev
+  resourceVersion: "34690"
+  uid: 1be1a7b7-6bea-445a-aa15-04f65abc9e38
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: checkout
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: "2026-08-04T10:57:33+01:00"
+      labels:
+        app.kubernetes.io/name: checkout
+        app.kubernetes.io/part-of: northstar
+        app.kubernetes.io/version: 0.3.0
+    spec:
+      containers:
+      - env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: DATABASE_URL
+              name: checkout-secrets
+        envFrom:
+        - configMapRef:
+            name: checkout-config
+        image: floci-ecr-registry:5000/000000000000/us-east-1/northstar/checkout:0.3.0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 3
+        name: checkout
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ready
+            port: http
+            scheme: HTTP
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 3
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+        startupProbe:
+          failureThreshold: 30
+          httpGet:
+            path: /health
+            port: http
+            scheme: HTTP
+          periodSeconds: 2
+          successThreshold: 1
+          timeoutSeconds: 2
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 2
+  conditions:
+  - lastTransitionTime: "2026-08-09T14:06:34Z"
+    lastUpdateTime: "2026-08-09T14:06:34Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-08-09T15:12:58Z"
+    lastUpdateTime: "2026-08-09T15:44:11Z"
+    message: ReplicaSet "checkout-c6dbb5c87" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 26
+  readyReplicas: 2
+  replicas: 2
+  updatedReplicas: 2
