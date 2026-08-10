@@ -855,3 +855,45 @@ MTTD / MTTR
 "How quickly did we detect and recover?"
 ```
 
+## Lessons from INC-004B
+
+### Readiness vs Liveness
+
+A readiness failure and liveness failure have different consequences.
+
+Readiness failure:
+
+`Stop routing traffic to this pod.`
+
+Liveness failure:
+
+`Terminate and restart this container.`
+
+During INC-004B, aggressive liveness settings caused Kubernetes to restart the
+JVM during severe memory/GC pressure.
+
+The restart temporarily cleared process-local cache and heap state and caused
+customer latency to recover.
+
+Do not mistake this automatic recovery for permanent remediation of the
+underlying application defect.
+
+### Historical Events Matter
+
+Current pod state may show:
+
+`Running / Ready`
+
+while Kubernetes events reveal previous:
+
+- readiness failures
+- liveness failures
+- restarts
+
+Always inspect event history during memory-pressure incidents.
+
+### Incident Timing
+
+Record timestamps while the incident is occurring.
+
+Do not reconstruct TTD/TTA/TTR from memory after the incident.
