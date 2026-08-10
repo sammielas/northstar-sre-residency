@@ -1,0 +1,72 @@
+# INC-004B Kubernetes Triage
+
+Captured: 2026-08-10T11:30:25+01:00
+
+NAME                              READY   STATUS    RESTARTS   AGE   IP            NODE           NOMINATED NODE   READINESS GATES
+jvm-cache-demo-7b6c75c879-kxhcz   1/1     Running   0          19m   10.42.1.107   3a24db0382e4   <none>           <none>
+
+POD                               NAME   CPU(cores)   MEMORY(bytes)   
+jvm-cache-demo-7b6c75c879-kxhcz   app    13m          308Mi           
+
+Name:             jvm-cache-demo-7b6c75c879-kxhcz
+Namespace:        northstar-dev
+Priority:         0
+Service Account:  default
+Node:             3a24db0382e4/172.17.0.4
+Start Time:       Mon, 10 Aug 2026 11:10:42 +0100
+Labels:           app.kubernetes.io/name=jvm-cache-demo
+                  pod-template-hash=7b6c75c879
+Annotations:      kubectl.kubernetes.io/restartedAt: 2026-08-10T11:10:33+01:00
+Status:           Running
+IP:               10.42.1.107
+IPs:
+  IP:           10.42.1.107
+Controlled By:  ReplicaSet/jvm-cache-demo-7b6c75c879
+Containers:
+  app:
+    Container ID:   containerd://3bbf05fb716f9b6ba5037c4570e2904413c85178cc7f9bf1d3b5df6833b00c6b
+    Image:          floci-ecr-registry:5000/000000000000/us-east-1/northstar/jvm-cache-demo:0.1.0
+    Image ID:       floci-ecr-registry:5000/000000000000/us-east-1/northstar/jvm-cache-demo@sha256:cf94d019e9da5d9c8e5162dacbd04da9faa527852d0e04b9fa73f2730d0a379a
+    Port:           8080/TCP (http)
+    Host Port:      0/TCP (http)
+    State:          Running
+      Started:      Mon, 10 Aug 2026 11:10:44 +0100
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     500m
+      memory:  384Mi
+    Requests:
+      cpu:        50m
+      memory:     96Mi
+    Liveness:     http-get http://:http/health delay=0s timeout=1s period=10s #success=1 #failure=3
+    Readiness:    http-get http://:http/ready delay=0s timeout=1s period=5s #success=1 #failure=3
+    Environment:  <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-7r98n (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-7r98n:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                  From               Message
+  ----     ------     ----                 ----               -------
+  Normal   Scheduled  19m                  default-scheduler  Successfully assigned northstar-dev/jvm-cache-demo-7b6c75c879-kxhcz to 3a24db0382e4
+  Normal   Pulled     19m                  kubelet            spec.containers{app}: Container image "floci-ecr-registry:5000/000000000000/us-east-1/northstar/jvm-cache-demo:0.1.0" already present on machine
+  Normal   Created    19m                  kubelet            spec.containers{app}: Created container: app
+  Normal   Started    19m                  kubelet            spec.containers{app}: Started container app
+  Warning  Unhealthy  2m17s (x2 over 19m)  kubelet            spec.containers{app}: Readiness probe failed: Get "http://10.42.1.107:8080/ready": context deadline exceeded (Client.Timeout exceeded while awaiting headers)

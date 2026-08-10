@@ -1,0 +1,2 @@
+NAME                              READY   STATUS    RESTARTS   AGE   IP            NODE           NOMINATED NODE   READINESS GATES
+jvm-cache-demo-68c5c55c8b-fn45x   1/1     Running   0          64m   10.42.1.105   3a24db0382e4   <none>           <none>

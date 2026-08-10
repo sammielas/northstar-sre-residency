@@ -1,0 +1,17 @@
+# INC-004B Recovery Verification
+
+Captured: 2026-08-10T11:12:24+01:00
+
+NAME                              READY   STATUS    RESTARTS   AGE
+jvm-cache-demo-7b6c75c879-kxhcz   1/1     Running   0          104s
+
+POD                               NAME   CPU(cores)   MEMORY(bytes)   
+jvm-cache-demo-7b6c75c879-kxhcz   app    38m          62Mi            
+
+jvm_memory_used_bytes{area="heap"} 7578544
+jvm_memory_max_bytes{area="heap"} 259522560
+jvm_gc_collection_seconds_count 1
+jvm_gc_collection_seconds_sum 0.526
+northstar_profile_p95_seconds 0.01904384
+northstar_cache_entries 0
+northstar_cache_leak_enabled 0

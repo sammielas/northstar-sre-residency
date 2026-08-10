@@ -1,0 +1,48 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: northstar-slack
+  namespace: northstar-dev
+  labels:
+    alertconfig: northstar
+spec:
+  route:
+    receiver: northstar-slack
+    groupBy:
+      - alertname
+      - service
+    groupWait: 10s
+    groupInterval: 1m
+    repeatInterval: 4h
+
+  receivers:
+    - name: northstar-slack
+      slackConfigs:
+        - apiURL:
+            name: northstar-slack-webhook
+            key: webhook-url
+
+          channel: "#northstar"
+
+          sendResolved: true
+
+          username: "NorthStar Alertmanager"
+
+          title: >-
+            {{ if eq .Status "firing" }}🔥 FIRING{{ else }}✅ RESOLVED{{ end }}
+            — {{ .CommonLabels.alertname }}
+
+          text: >-
+            *Service:* {{ .CommonLabels.service }}
+            *Severity:* {{ .CommonLabels.severity }}
+            *Namespace:* {{ .CommonLabels.namespace }}
+
+            *Summary:* {{ .CommonAnnotations.summary }}
+
+            *Description:* {{ .CommonAnnotations.description }}
+
+            *Runbook:* {{ .CommonAnnotations.runbook_url }}
+
+            *Dashboard:* {{ .CommonAnnotations.dashboard_url }}
+
+            *Next action:* Acknowledge this alert, open the runbook, then begin triage.
