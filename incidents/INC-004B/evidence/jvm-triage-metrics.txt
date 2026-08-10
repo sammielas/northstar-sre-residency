@@ -1,0 +1,11 @@
+# INC-004B Triage Snapshot
+
+Captured: 2026-08-10T11:30:14+01:00
+
+jvm_memory_used_bytes{area="heap"} 259181112
+jvm_memory_max_bytes{area="heap"} 259522560
+jvm_gc_collection_seconds_count 33
+jvm_gc_collection_seconds_sum 7.227
+northstar_profile_p95_seconds 0.450455106
+northstar_cache_entries 244
+northstar_cache_leak_enabled 1

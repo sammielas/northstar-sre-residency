@@ -1,0 +1,29 @@
+# INC-004B Pre-Incident Baseline
+
+Captured: 2026-08-10T07:28:36+01:00
+
+=== NODE ===
+NAME           STATUS   ROLES           AGE     VERSION
+3a24db0382e4   Ready    control-plane   5d22h   v1.34.1+k3s1
+
+=== NODE RESOURCE USAGE ===
+NAME           CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+3a24db0382e4   330m         5%       2775Mi          34%         
+
+=== NODE MEMORY PRESSURE ===
+NAME           MEMORY_PRESSURE
+3a24db0382e4   False
+
+=== CHECKOUT DEPLOYMENT ===
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+checkout   2/2     2            2           5d20h
+
+=== CHECKOUT PODS ===
+NAME                       READY   STATUS    RESTARTS   AGE
+checkout-c6dbb5c87-gtfxs   1/1     Running   0          58m
+checkout-c6dbb5c87-vb8wz   1/1     Running   0          58m
+
+=== CHECKOUT RESOURCE USAGE ===
+NAME                       CPU(cores)   MEMORY(bytes)   
+checkout-c6dbb5c87-gtfxs   4m           45Mi            
+checkout-c6dbb5c87-vb8wz   3m           45Mi            

@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: jvm-cache-demo
+  namespace: monitoring
+  labels:
+    release: northstar-monitoring
+spec:
+  namespaceSelector:
+    matchNames: [northstar-dev]
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: jvm-cache-demo
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 15s
