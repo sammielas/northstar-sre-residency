@@ -855,45 +855,91 @@ MTTD / MTTR
 "How quickly did we detect and recover?"
 ```
 
+
+---
+
 ## Lessons from INC-004B
 
 ### Readiness vs Liveness
 
-A readiness failure and liveness failure have different consequences.
+A readiness failure means:
 
-Readiness failure:
+> Stop routing traffic to this pod.
 
-`Stop routing traffic to this pod.`
+A liveness failure means:
 
-Liveness failure:
+> Terminate and restart this container.
 
-`Terminate and restart this container.`
+During INC-004B Attempt 1, severe JVM/GC pressure caused the health endpoint
+to exceed the liveness timeout.
 
-During INC-004B, aggressive liveness settings caused Kubernetes to restart the
-JVM during severe memory/GC pressure.
+Kubernetes therefore restarted the JVM.
 
-The restart temporarily cleared process-local cache and heap state and caused
-customer latency to recover.
+The restart cleared process-local heap and cache state and temporarily restored
+customer latency.
 
-Do not mistake this automatic recovery for permanent remediation of the
-underlying application defect.
+Do not confuse this automatic recovery with remediation of the underlying
+application defect.
 
-### Historical Events Matter
+### Historical Kubernetes Events Matter
 
-Current pod state may show:
+The current pod may show:
 
 `Running / Ready`
 
-while Kubernetes events reveal previous:
+while historical Kubernetes events reveal earlier:
 
 - readiness failures
 - liveness failures
-- restarts
+- container restarts
 
-Always inspect event history during memory-pressure incidents.
+Always inspect Kubernetes events during JVM memory-pressure investigations.
+
+### Customer Health vs Process Health
+
+A running JVM does not necessarily mean customers are receiving an acceptable
+service.
+
+During INC-004B, P95 latency degraded significantly while the application
+continued running.
+
+Use customer-facing SLIs alongside Kubernetes health signals.
+
+### Garbage Collection Is a Signal, Not Automatically the Root Cause
+
+During INC-004B, GC activity increased because heap pressure increased.
+
+The cache continued retaining references to objects, so GC could not reclaim
+those objects.
+
+Therefore:
+
+cache retention
+→ heap pressure
+→ increased GC
+→ latency degradation
+
+GC was reacting to the problem rather than causing the original defect.
+
+### Recovery Must Be Verified
+
+A successful rollout or container restart is not sufficient evidence that an
+incident has recovered.
+
+Verify the same signals used during detection and triage:
+
+- JVM heap
+- GC behaviour
+- application-specific memory/cache metrics
+- customer latency
+- readiness
+- alert state
 
 ### Incident Timing
 
-Record timestamps while the incident is occurring.
+Record timestamps while the incident is happening.
 
-Do not reconstruct TTD/TTA/TTR from memory after the incident.
+Do not reconstruct TTD, TTA or TTR from memory after the incident.
+
+Future incidents should record detection, acknowledgement, triage, mitigation
+and recovery timestamps as part of the runbook workflow.
