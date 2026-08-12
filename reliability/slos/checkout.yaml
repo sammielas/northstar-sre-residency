@@ -1,0 +1,19 @@
+service: checkout
+
+slo:
+  name: checkout-availability
+  description: Customer checkout requests should complete successfully.
+
+  sli:
+    type: availability
+    good_events: successful_checkout_requests
+    total_events: total_checkout_requests
+
+  objective: 99.9
+
+  window:
+    type: rolling
+    days: 30
+
+error_budget:
+  percentage: 0.1

@@ -1,0 +1,10 @@
+# RG-001 Baseline
+
+Captured: 2026-08-11T10:06:17+01:00
+
+Service: checkout
+SLO: 99.9%
+30-day error budget: 43.2 minutes
+Consumed: 30 minutes
+Remaining: 13.2 minutes
+Consumed percentage: 69.4%
