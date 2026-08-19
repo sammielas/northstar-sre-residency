@@ -1,0 +1,12 @@
+=== PRE-MITIGATION STATE ===
+Captured: 2026-08-19T09:44:12Z
+
+=== REDIS ===
+deployment.apps/redis            0/0     0            0           15d
+service/redis            ClusterIP   10.43.191.152   <none>        6379/TCP   15d
+endpoints/redis            <none>             15d
+
+=== CHECKOUT ===
+deployment.apps/checkout         0/2     2            0           14d
+pod/checkout-858469d958-b86gd         0/1     Running   0              23h
+pod/checkout-858469d958-dctlg         0/1     Running   0              23h

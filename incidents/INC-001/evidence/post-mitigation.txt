@@ -1,0 +1,16 @@
+=== POST-MITIGATION STATE ===
+Captured: 2026-08-19T09:49:42Z
+
+=== DEPLOYMENTS ===
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+checkout   2/2     2            2           15d
+redis      1/1     1            1           15d
+
+=== CHECKOUT PODS ===
+NAME                        READY   STATUS    RESTARTS   AGE   IP            NODE           NOMINATED NODE   READINESS GATES
+checkout-858469d958-b86gd   1/1     Running   0          23h   10.42.1.178   3a24db0382e4   <none>           <none>
+checkout-858469d958-dctlg   1/1     Running   0          23h   10.42.1.179   3a24db0382e4   <none>           <none>
+
+=== REDIS ENDPOINT ===
+NAME    ENDPOINTS          AGE
+redis   10.42.1.182:6379   15d

@@ -1,0 +1,11 @@
+LAST SEEN   TYPE      REASON              OBJECT                                MESSAGE
+6m15s       Normal    Scheduled           pod/checkout-6d4964b97-k5p6n          Successfully assigned northstar-dev/checkout-6d4964b97-k5p6n to 3a24db0382e4
+16m         Warning   Unhealthy           pod/jvm-cache-demo-5b5fcf6dc9-ccv8s   Liveness probe failed: Get "http://10.42.1.148:8080/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+16m         Warning   Unhealthy           pod/jvm-cache-demo-5b5fcf6dc9-ccv8s   Readiness probe failed: Get "http://10.42.1.148:8080/ready": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+6m15s       Normal    SuccessfulCreate    replicaset/checkout-6d4964b97         Created pod: checkout-6d4964b97-k5p6n
+6m15s       Normal    ScalingReplicaSet   deployment/checkout                   Scaled up replica set checkout-6d4964b97 from 0 to 1
+6m14s       Normal    Pulled              pod/checkout-6d4964b97-k5p6n          Container image "floci-ecr-registry:5000/000000000000/us-east-1/northstar/checkout:0.6.0" already present on machine
+6m14s       Normal    Created             pod/checkout-6d4964b97-k5p6n          Created container: checkout
+6m14s       Normal    Started             pod/checkout-6d4964b97-k5p6n          Started container checkout
+6m9s        Warning   Unhealthy           pod/checkout-6d4964b97-k5p6n          Startup probe failed: Get "http://10.42.1.180:8080/health": dial tcp 10.42.1.180:8080: connect: connection refused
+56s         Warning   Unhealthy           pod/checkout-6d4964b97-k5p6n          Readiness probe failed: HTTP probe failed with statuscode: 503

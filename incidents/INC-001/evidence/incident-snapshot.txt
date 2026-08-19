@@ -1,0 +1,41 @@
+=== INCIDENT SNAPSHOT ===
+Captured: 2026-08-19T08:12:19Z
+
+=== CHECKOUT ===
+deployment.apps/checkout         0/2     2            0           14d
+pod/checkout-858469d958-b86gd         0/1     Running   0            21h
+pod/checkout-858469d958-dctlg         0/1     Running   0            21h
+
+=== REDIS ===
+deployment.apps/redis            0/0     0            0           14d
+service/redis            ClusterIP   10.43.191.152   <none>        6379/TCP   14d
+
+=== RECENT EVENTS ===
+LAST SEEN   TYPE      REASON              OBJECT                                MESSAGE
+10m         Normal    Scheduled           pod/checkout-6d4964b97-hl6w6          Successfully assigned northstar-dev/checkout-6d4964b97-hl6w6 to 3a24db0382e4
+24m         Normal    Scheduled           pod/checkout-6d4964b97-k5p6n          Successfully assigned northstar-dev/checkout-6d4964b97-k5p6n to 3a24db0382e4
+34m         Warning   Unhealthy           pod/jvm-cache-demo-5b5fcf6dc9-ccv8s   Liveness probe failed: Get "http://10.42.1.148:8080/health": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+34m         Warning   Unhealthy           pod/jvm-cache-demo-5b5fcf6dc9-ccv8s   Readiness probe failed: Get "http://10.42.1.148:8080/ready": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+24m         Normal    SuccessfulCreate    replicaset/checkout-6d4964b97         Created pod: checkout-6d4964b97-k5p6n
+24m         Normal    Created             pod/checkout-6d4964b97-k5p6n          Created container: checkout
+24m         Normal    Started             pod/checkout-6d4964b97-k5p6n          Started container checkout
+24m         Normal    Pulled              pod/checkout-6d4964b97-k5p6n          Container image "floci-ecr-registry:5000/000000000000/us-east-1/northstar/checkout:0.6.0" already present on machine
+23m         Warning   Unhealthy           pod/checkout-6d4964b97-k5p6n          Startup probe failed: Get "http://10.42.1.180:8080/health": dial tcp 10.42.1.180:8080: connect: connection refused
+18m         Warning   Unhealthy           pod/checkout-6d4964b97-k5p6n          Readiness probe failed: HTTP probe failed with statuscode: 503
+14m         Normal    Killing             pod/checkout-6d4964b97-k5p6n          Stopping container checkout
+14m         Normal    SuccessfulDelete    replicaset/checkout-6d4964b97         Deleted pod: checkout-6d4964b97-k5p6n
+10m         Normal    ScalingReplicaSet   deployment/checkout                   Scaled up replica set checkout-6d4964b97 from 0 to 1
+10m         Normal    SuccessfulCreate    replicaset/checkout-6d4964b97         Created pod: checkout-6d4964b97-hl6w6
+10m         Normal    Started             pod/checkout-6d4964b97-hl6w6          Started container checkout
+10m         Normal    Created             pod/checkout-6d4964b97-hl6w6          Created container: checkout
+10m         Normal    Pulled              pod/checkout-6d4964b97-hl6w6          Container image "floci-ecr-registry:5000/000000000000/us-east-1/northstar/checkout:0.6.0" already present on machine
+10m         Warning   Unhealthy           pod/checkout-6d4964b97-hl6w6          Startup probe failed: Get "http://10.42.1.181:8080/health": dial tcp 10.42.1.181:8080: connect: connection refused
+5m29s       Warning   Unhealthy           pod/checkout-6d4964b97-hl6w6          Readiness probe failed: HTTP probe failed with statuscode: 503
+4m52s       Normal    Killing             pod/checkout-6d4964b97-hl6w6          Stopping container checkout
+4m52s       Normal    ScalingReplicaSet   deployment/checkout                   Scaled down replica set checkout-6d4964b97 from 1 to 0
+4m52s       Normal    SuccessfulDelete    replicaset/checkout-6d4964b97         Deleted pod: checkout-6d4964b97-hl6w6
+110s        Normal    Killing             pod/redis-8466b8768b-vnlhn            Stopping container redis
+110s        Normal    SuccessfulDelete    replicaset/redis-8466b8768b           Deleted pod: redis-8466b8768b-vnlhn
+110s        Normal    ScalingReplicaSet   deployment/redis                      Scaled down replica set redis-8466b8768b from 1 to 0
+3s          Warning   Unhealthy           pod/checkout-858469d958-dctlg         Readiness probe failed: HTTP probe failed with statuscode: 503
+3s          Warning   Unhealthy           pod/checkout-858469d958-b86gd         Readiness probe failed: HTTP probe failed with statuscode: 503
