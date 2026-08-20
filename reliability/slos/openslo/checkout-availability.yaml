@@ -1,0 +1,35 @@
+apiVersion: openslo/v1alpha
+kind: SLO
+metadata:
+  name: checkout-availability
+  displayName: Checkout Availability
+spec:
+  service: checkout
+  description: NorthStar Checkout business attempts should succeed.
+  budgetingMethod: Occurrences
+  objectives:
+    - ratioMetrics:
+        good:
+          source: prometheus
+          queryType: promql
+          query: |
+            sum(
+              rate(
+                northstar_checkout_attempts_total{
+                  result="accepted"
+                }[{{.window}}]
+              )
+            )
+        total:
+          source: prometheus
+          queryType: promql
+          query: |
+            sum(
+              rate(
+                northstar_checkout_attempts_total[{{.window}}]
+              )
+            )
+      target: 0.999
+  timeWindows:
+    - count: 30
+      unit: Day

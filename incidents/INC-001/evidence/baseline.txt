@@ -1,0 +1,16 @@
+=== NORTHSTAR INC-001 PRE-INCIDENT BASELINE ===
+Captured: 2026-08-19T07:43:01Z
+
+=== DEPLOYMENT ===
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+checkout   2/2     2            2           14d
+
+=== PODS ===
+NAME                        READY   STATUS    RESTARTS   AGE   IP            NODE           NOMINATED NODE   READINESS GATES
+checkout-858469d958-b86gd   1/1     Running   0          21h   10.42.1.178   3a24db0382e4   <none>           <none>
+checkout-858469d958-dctlg   1/1     Running   0          21h   10.42.1.179   3a24db0382e4   <none>           <none>
+
+=== RESOURCE USAGE ===
+NAME                        CPU(cores)   MEMORY(bytes)   
+checkout-858469d958-b86gd   4m           59Mi            
+checkout-858469d958-dctlg   4m           44Mi            

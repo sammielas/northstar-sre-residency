@@ -1,0 +1,3 @@
+NAME                        READY   STATUS    RESTARTS   AGE   IP            NODE           NOMINATED NODE   READINESS GATES
+checkout-675c9696cc-65dtj   1/1     Running   0          12m   10.42.1.191   3a24db0382e4   <none>           <none>
+checkout-675c9696cc-grt5r   1/1     Running   0          12m   10.42.1.192   3a24db0382e4   <none>           <none>

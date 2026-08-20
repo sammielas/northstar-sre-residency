@@ -1,0 +1,2 @@
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                                                    SELECTOR
+checkout   2/2     2            2           16d   checkout     floci-ecr-registry:5000/000000000000/us-east-1/northstar/checkout:0.7.0   app.kubernetes.io/name=checkout

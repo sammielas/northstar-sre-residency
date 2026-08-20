@@ -1,0 +1,8 @@
+=== AVAILABILITY ===
+0
+
+=== ERROR RATE ===
+1
+
+=== BURN RATE ===
+NO_DATA

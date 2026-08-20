@@ -1,0 +1,10 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    74  100    74    0     0   4474      0 --:--:-- --:--:-- --:--:--  4625
+HTTP/1.1 200 OK
+date: Wed, 19 Aug 2026 09:46:47 GMT
+server: uvicorn
+content-length: 74
+content-type: application/json
+
+{"status":"accepted","event_id":6621,"customer_id":"recovery-proof-15771"}

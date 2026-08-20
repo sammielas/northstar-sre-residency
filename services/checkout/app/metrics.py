@@ -18,6 +18,12 @@ CHECKOUT_ATTEMPTS_TOTAL = Counter(
     ["result"],
 )
 
+CHECKOUT_QUALITY_TOTAL = Counter(
+    "northstar_checkout_quality_total",
+    "Quality outcome of completed checkout transactions",
+    ["outcome"],
+)
+
 DEPENDENCY_UP = Gauge(
     "northstar_checkout_dependency_up",
     "Dependency availability, where 1 is available and 0 is unavailable",

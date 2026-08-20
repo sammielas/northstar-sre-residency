@@ -1,0 +1,83 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+
+metadata:
+  name: checkout-error-budget-burn
+  namespace: monitoring
+  labels:
+    release: northstar-monitoring
+
+spec:
+  groups:
+    - name: northstar-checkout-error-budget
+      rules:
+
+        - alert: CheckoutErrorBudgetRestricted
+          expr: |
+            slo:current_burn_rate:ratio{
+              sloth_service="checkout"
+            } >= 1
+            and
+            slo:current_burn_rate:ratio{
+              sloth_service="checkout"
+            } < 2
+          for: 2m
+
+          labels:
+            severity: info
+            service: checkout
+            reliability_state: restricted
+
+          annotations:
+            summary: "Checkout error budget burn is elevated"
+            description: >
+              Checkout is consuming its error budget faster than the
+              sustainable rate. Increased release controls are required.
+            dashboard_url: "http://127.0.0.1:3000/d/northstar-checkout-slo"
+            runbook_url: "https://github.com/sammielas/northstar-sre-residency/blob/main/reliability/policies/error-budget-burn-policy.md"
+
+
+        - alert: CheckoutErrorBudgetColdFreeze
+          expr: |
+            slo:current_burn_rate:ratio{
+              sloth_service="checkout"
+            } >= 2
+            and
+            slo:current_burn_rate:ratio{
+              sloth_service="checkout"
+            } < 6
+          for: 2m
+
+          labels:
+            severity: warning
+            service: checkout
+            reliability_state: cold-freeze
+
+          annotations:
+            summary: "Checkout has entered COLD FREEZE"
+            description: >
+              Checkout is burning its reliability budget rapidly.
+              Normal feature changes should be blocked.
+            dashboard_url: "http://127.0.0.1:3000/d/northstar-checkout-slo"
+            runbook_url: "https://github.com/sammielas/northstar-sre-residency/blob/main/reliability/policies/error-budget-burn-policy.md"
+
+
+        - alert: CheckoutErrorBudgetHardFreeze
+          expr: |
+            slo:current_burn_rate:ratio{
+              sloth_service="checkout"
+            } >= 6
+          for: 1m
+
+          labels:
+            severity: critical
+            service: checkout
+            reliability_state: hard-freeze
+
+          annotations:
+            summary: "Checkout has entered HARD FREEZE"
+            description: >
+              Checkout error budget is being consumed at an unacceptable
+              rate. Normal production changes must stop.
+            dashboard_url: "http://127.0.0.1:3000/d/northstar-checkout-slo"
+            runbook_url: "https://github.com/sammielas/northstar-sre-residency/blob/main/reliability/policies/error-budget-burn-policy.md"

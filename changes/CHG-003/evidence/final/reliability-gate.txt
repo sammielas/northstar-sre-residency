@@ -1,0 +1,10 @@
+=== NORTHSTAR PRE-CHANGE RELIABILITY CHECK ===
+
+Traffic      : 0.0073590827639243035
+Availability : 1
+Error Rate   : 0
+SLO Target   : 0.9990000000000001
+Burn Rate    : 0.00x
+
+DECISION: GO
+Reason: Reliability telemetry is healthy and supports a normal change.

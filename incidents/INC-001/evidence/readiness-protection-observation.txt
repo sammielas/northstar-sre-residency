@@ -1,0 +1,12 @@
+Observation:
+A Checkout deployment was configured with an invalid Redis endpoint.
+
+Result:
+The new Checkout pod started but failed its readiness probe with HTTP 503.
+
+Kubernetes kept the existing healthy Checkout replicas available.
+
+Customer checkout requests continued returning HTTP 200.
+
+Conclusion:
+The readiness probe prevented an unhealthy application replica from receiving customer traffic and stopped the bad rollout from causing a customer-facing outage.
