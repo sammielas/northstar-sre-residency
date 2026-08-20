@@ -13,6 +13,7 @@ from .dependencies import DependencyClients
 from .logging_config import configure_logging
 from .metrics import (
     CHECKOUT_ATTEMPTS_TOTAL,
+    CHECKOUT_QUALITY_TOTAL,
     DEPENDENCY_UP,
     HTTP_REQUEST_DURATION_SECONDS,
     HTTP_REQUESTS_TOTAL,
@@ -119,10 +120,30 @@ async def checkout(customer_id: str) -> dict[str, object]:
     if clients is None:
         raise HTTPException(status_code=503, detail="Dependencies not initialised")
 
+    if settings is not None and settings.inject_latency_ms > 0:
+        time.sleep(settings.inject_latency_ms / 1000)
+
+    if settings is not None and settings.inject_checkout_failure:
+        CHECKOUT_ATTEMPTS_TOTAL.labels(result="failed").inc()
+        raise HTTPException(
+            status_code=503,
+            detail="Injected Checkout failure",
+        )
+
     try:
         event_id = clients.create_checkout_event(customer_id)
         clients.cache_checkout_event(event_id, customer_id)
         CHECKOUT_ATTEMPTS_TOTAL.labels(result="accepted").inc()
+
+        quality_invalid = (
+            settings is not None
+            and settings.inject_quality_failure
+        )
+
+        if quality_invalid:
+            CHECKOUT_QUALITY_TOTAL.labels(outcome="invalid").inc()
+        else:
+            CHECKOUT_QUALITY_TOTAL.labels(outcome="valid").inc()
         logger.info(
             "Checkout accepted customer_id=%s event_id=%s",
             customer_id,
@@ -131,7 +152,11 @@ async def checkout(customer_id: str) -> dict[str, object]:
         return {
             "status": "accepted",
             "event_id": event_id,
-            "customer_id": customer_id,
+            "customer_id": (
+                "CORRUPTED-CUSTOMER"
+                if quality_invalid
+                else customer_id
+            ),
         }
     except Exception as exc:
         CHECKOUT_ATTEMPTS_TOTAL.labels(result="failed").inc()
